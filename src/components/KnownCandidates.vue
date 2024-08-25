@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
-import { WordleSolver } from './Word'
+import { WordleSolver } from './WordleSolver'
 import TheWord from './TheWord.vue'
 
 const props = defineProps({
