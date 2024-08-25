@@ -36,8 +36,8 @@ onUnmounted(() => {
 
 <template>
   <div>
-    <div v-for="word in props.solver.words" :key="word.id" class="container">
-      <TheWord @removeWord="removeWord" :word="word" />
+    <div v-for="(word, idx) in props.solver.words" :key="idx" class="container">
+      <TheWord @removeWord="removeWord(idx)" :word="word" />
     </div>
   </div>
 </template>

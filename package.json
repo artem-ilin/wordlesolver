@@ -13,6 +13,10 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
+  "pre-commit": [
+    "lint",
+    "format"
+  ],
   "dependencies": {
     "pinia": "^2.1.7",
     "vue": "^3.4.29",
@@ -33,6 +37,7 @@
     "eslint-plugin-vue": "^9.23.0",
     "jsdom": "^24.1.0",
     "npm-run-all2": "^6.2.0",
+    "pre-commit": "^1.2.2",
     "prettier": "^3.2.5",
     "typescript": "~5.4.0",
     "vite": "^5.3.1",

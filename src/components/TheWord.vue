@@ -13,7 +13,7 @@ const emit = defineEmits(['removeWord'])
 
 const emitRemove = () => {
   if (props.word.isFull()) {
-    emit('removeWord', props.word.id)
+    emit('removeWord')
   }
 }
 </script>

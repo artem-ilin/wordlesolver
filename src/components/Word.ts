@@ -13,7 +13,6 @@ const max_words = 6
 let id = 0
 
 export class Word {
-  id: number
   letters: Array<Letter> = [
     new Letter(id++, ''),
     new Letter(id++, ''),
@@ -22,10 +21,6 @@ export class Word {
     new Letter(id++, '')
   ]
   current_letter_idx: number = 0
-
-  constructor(id: number) {
-    this.id = id
-  }
 
   addLetter(value: string): void {
     this.letters[this.current_letter_idx].value = value
@@ -45,28 +40,28 @@ export class Word {
 }
 
 export class WordleSolver {
-  words: Array<Word> = [new Word(0)]
+  words: Array<Word> = [new Word()]
 
-  removeWord(word_id: number): void {
-    this.words = this.words.filter((word) => word.id !== word_id)
+  removeWord(word_idx: number): void {
+    this.words.splice(word_idx, 1)
   }
 
   addLetter(value: string): void {
-    const current_word = this.words[this.words.length-1]
+    const current_word = this.words[this.words.length - 1]
     if (!current_word.isFull()) {
       current_word.addLetter(value)
     }
   }
 
   removeLetter(): void {
-    const current_word = this.words[this.words.length-1]
+    const current_word = this.words[this.words.length - 1]
     current_word.removeLetter()
   }
 
   submitWord(): void {
-    const current_word = this.words[this.words.length-1]
+    const current_word = this.words[this.words.length - 1]
     if (current_word.isFull() && !this.isFull()) {
-      this.words.push(new Word(this.words.length))
+      this.words.push(new Word())
     }
   }
 
