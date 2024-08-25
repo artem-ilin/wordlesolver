@@ -7,6 +7,6 @@ const wordleSolver = reactive(new WordleSolver())
 </script>
 
 <template>
-  <h1>Solver</h1>
+  <h1>Wordle Solver</h1>
   <KnownCandidates :solver="wordleSolver" />
 </template>

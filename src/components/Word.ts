@@ -8,6 +8,8 @@ export class Letter {
   }
 }
 
+const max_words = 6
+
 let id = 0
 
 export class Word {
@@ -31,8 +33,10 @@ export class Word {
   }
 
   removeLetter(): void {
-    this.current_letter_idx--
-    this.letters[this.current_letter_idx].value = ''
+    if (this.current_letter_idx > 0) {
+      this.current_letter_idx--
+      this.letters[this.current_letter_idx].value = ''
+    }
   }
 
   isFull(): boolean {
@@ -42,21 +46,31 @@ export class Word {
 
 export class WordleSolver {
   words: Array<Word> = [new Word(0)]
-  current_word_idx: number = 0
+
+  removeWord(word_id: number): void {
+    this.words = this.words.filter((word) => word.id !== word_id)
+  }
 
   addLetter(value: string): void {
-    if (!this.words[this.current_word_idx].isFull()) {
-      this.words[this.current_word_idx].addLetter(value)
-    } else {
-      if (!this.isFull()) {
-        this.words.push(new Word(this.words.length))
-        this.current_word_idx++
-        this.words[this.current_word_idx].addLetter(value)
-      }
+    const current_word = this.words[this.words.length-1]
+    if (!current_word.isFull()) {
+      current_word.addLetter(value)
+    }
+  }
+
+  removeLetter(): void {
+    const current_word = this.words[this.words.length-1]
+    current_word.removeLetter()
+  }
+
+  submitWord(): void {
+    const current_word = this.words[this.words.length-1]
+    if (current_word.isFull() && !this.isFull()) {
+      this.words.push(new Word(this.words.length))
     }
   }
 
   isFull(): boolean {
-    return this.words.length >= 6
+    return this.words.length >= max_words
   }
 }
