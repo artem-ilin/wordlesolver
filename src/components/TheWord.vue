@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Word } from './Word'
+import { Word } from './WordleSolver'
 import TheLetter from './TheLetter.vue'
 
 const props = defineProps({
@@ -40,7 +40,6 @@ const emitRemove = () => {
   margin: 1px;
   text-align: center;
   padding: 15px;
-  background-color: #f0f0f0;
 }
 .delete-button {
   width: 50px;

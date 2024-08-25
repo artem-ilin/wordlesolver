@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import KnownCandidates from './KnownCandidates.vue'
-import { WordleSolver } from './Word'
+import { WordleSolver } from './WordleSolver'
 
 const wordleSolver = reactive(new WordleSolver())
 </script>

@@ -1,10 +1,44 @@
+enum LetterState {
+  MISS = 'MISS',
+  WRONG_PLACE = 'WRONG_PLACE',
+  HIT = 'HIT'
+}
+
+function getNextEnumValue<T extends object>(enumObj: T, currentValue: T[keyof T]): T[keyof T] {
+  let returnCurrent = false
+  for (const key in enumObj) {
+    if (returnCurrent) {
+      return enumObj[key as keyof T]
+    }
+    if (enumObj[key as keyof T] === currentValue) {
+      returnCurrent = true
+    }
+  }
+  for (const key in enumObj) {
+    return enumObj[key as keyof T]
+  }
+  throw new RangeError() // impossible for a non empty enum, stub for TS
+}
+
 export class Letter {
   id: number
   value: string
+  state: LetterState = LetterState.MISS
 
   constructor(id: number, value: string) {
     this.id = id
     this.value = value
+  }
+
+  nextState(): void {
+    if (this.value !== '') {
+      this.state = getNextEnumValue(LetterState, this.state)
+    }
+  }
+
+  resetState(): void {
+    this.value = ''
+    this.state = LetterState.MISS
   }
 }
 
@@ -30,7 +64,7 @@ export class Word {
   removeLetter(): void {
     if (this.current_letter_idx > 0) {
       this.current_letter_idx--
-      this.letters[this.current_letter_idx].value = ''
+      this.letters[this.current_letter_idx].resetState()
     }
   }
 

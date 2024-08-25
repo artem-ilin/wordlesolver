@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Letter } from './Word'
+import { Letter } from './WordleSolver'
 
 const props = defineProps({
   letter: {
@@ -10,7 +10,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="letter-box">{{ props.letter.value ?? '' }}</div>
+  <div class="letter-box" :class="'state-' + props.letter.state" @click="props.letter.nextState">
+    {{ props.letter.value }}
+  </div>
 </template>
 
 <style scoped>
@@ -24,7 +26,16 @@ const props = defineProps({
   border-radius: 10px;
   font-size: 24px;
   font-weight: bold;
-  background-color: #f0f0f0;
   color: #333;
+  cursor: pointer;
+}
+.state-MISS {
+  background-color: #dddddd;
+}
+.state-WRONG_PLACE {
+  background-color: #ffffff;
+}
+.state-HIT {
+  background-color: #ffec6d;
 }
 </style>
