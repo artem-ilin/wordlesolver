@@ -8,6 +8,14 @@ const props = defineProps({
     required: true
   }
 })
+
+const emit = defineEmits(['removeWord'])
+
+const emitRemove = () => {
+  if (props.word.isFull()) {
+    emit('removeWord', props.word.id)
+  }
+}
 </script>
 
 <template>
@@ -18,6 +26,7 @@ const props = defineProps({
       :letter="letter"
       class="item"
     />
+    <div @click="emitRemove" class="delete-button">X</div>
   </div>
 </template>
 
@@ -28,9 +37,24 @@ const props = defineProps({
 }
 .item {
   flex: 1;
-  margin: 2px 2px;
+  margin: 1px;
   text-align: center;
   padding: 15px;
   background-color: #f0f0f0;
+}
+.delete-button {
+  width: 50px;
+  height: 50px;
+  margin: 1px 8px;
+  text-align: center;
+  border: 2px solid #000;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  color: #333;
+
+  background-color: #f8ff332d;
+  cursor: pointer;
 }
 </style>
