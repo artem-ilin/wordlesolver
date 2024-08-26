@@ -2,6 +2,7 @@
 import { reactive } from 'vue'
 import KnownCandidates from './KnownCandidates.vue'
 import { WordleSolver } from './WordleSolver'
+import GuessedCandidates from './GuessedCandidates.vue'
 
 const wordleSolver = reactive(new WordleSolver())
 </script>
@@ -9,4 +10,5 @@ const wordleSolver = reactive(new WordleSolver())
 <template>
   <h1>Wordle Solver</h1>
   <KnownCandidates :solver="wordleSolver" />
+  <GuessedCandidates :solver="wordleSolver" />
 </template>
