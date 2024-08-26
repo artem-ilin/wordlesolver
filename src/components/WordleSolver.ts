@@ -75,6 +75,7 @@ export class Word {
 
 export class WordleSolver {
   words: Array<Word> = [new Word()]
+  guessCandidates: Array<string> = []
 
   removeWord(word_idx: number): void {
     this.words.splice(word_idx, 1)
@@ -101,5 +102,38 @@ export class WordleSolver {
 
   isFull(): boolean {
     return this.words.length >= max_words
+  }
+
+  analyzeLetters(): [Set<string>, Set<string>, Array<string>] {
+    const lettersToExclude: Set<string> = new Set()
+    const lettersToInclude: Set<string> = new Set()
+    const hitMask: Array<string> = ['', '', '', '', '']
+    this.words.forEach((word) => {
+      word.letters.forEach((letter, idx) => {
+        switch (letter.state) {
+          case LetterState.MISS:
+            lettersToExclude.add(letter.value)
+            break
+          case LetterState.WRONG_PLACE:
+            lettersToInclude.add(letter.value)
+            break
+          case LetterState.HIT:
+            lettersToInclude.add(letter.value)
+            hitMask[idx] = letter.value
+            break
+        }
+      })
+    })
+    return [lettersToExclude, lettersToInclude, hitMask]
+  }
+
+  guess(): void {
+    const [lettersToExclude, lettersToInclude, hitMask] = this.analyzeLetters()
+    console.log('lettersToExclude')
+    console.log(lettersToExclude)
+    console.log('lettersToInclude')
+    console.log(lettersToInclude)
+    console.log('hitMask')
+    console.log(hitMask)
   }
 }
