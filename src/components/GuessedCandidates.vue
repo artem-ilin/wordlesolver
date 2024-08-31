@@ -10,7 +10,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <button class="button" role="button" @click="props.solver.guess">Try guess</button>
+  <button class="button" role="button" @click="props.solver.guess">
+    {{ $t('guesser.submit_button_text') }}
+  </button>
   <ul>
     <li v-for="(word, idx) in props.solver.guessCandidates" :key="idx">
       <h2>{{ word }}</h2>

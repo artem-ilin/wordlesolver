@@ -136,4 +136,9 @@ export class WordleSolver {
     console.log('hitMask')
     console.log(hitMask)
   }
+
+  reset(): void {
+    this.words = [new Word()]
+    this.guessCandidates = []
+  }
 }
