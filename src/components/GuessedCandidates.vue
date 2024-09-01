@@ -10,11 +10,12 @@ const props = defineProps({
 </script>
 
 <template>
-  <button class="button" role="button" @click="props.solver.guess">
+  <button class="button" role="button" @click="props.solver.guess($i18n.locale)">
     {{ $t('guesser.submit_button_text') }}
   </button>
   <ul>
-    <li v-for="(word, idx) in props.solver.guessCandidates" :key="idx">
+    <p>{{ $t('guesser.found') }}: {{ props.solver.guessCandidates.length }}</p>
+    <li v-for="(word, idx) in props.solver.guessCandidates.slice(0, 20)" :key="idx">
       <h2>{{ word }}</h2>
     </li>
   </ul>

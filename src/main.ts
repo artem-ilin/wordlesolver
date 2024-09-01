@@ -13,12 +13,14 @@ const i18n = createI18n({
   messages: {
     en: {
       guesser: {
-        submit_button_text: 'Try guess'
+        submit_button_text: 'Try guess',
+        found: 'Found words'
       }
     },
     ru: {
       guesser: {
-        submit_button_text: 'Пробуем угадать'
+        submit_button_text: 'Пробуем угадать',
+        found: 'Найдено слов'
       }
     }
   }
