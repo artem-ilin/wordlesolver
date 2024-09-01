@@ -1,3 +1,5 @@
+import dictionary from './dictionary/main'
+
 enum LetterState {
   MISS = 'MISS',
   WRONG_PLACE = 'WRONG_PLACE',
@@ -104,37 +106,56 @@ export class WordleSolver {
     return this.words.length >= max_words
   }
 
-  analyzeLetters(): [Set<string>, Set<string>, Array<string>] {
+  analyzeLetters(): [Set<string>, Set<string>, Set<string>[], Array<string>] {
     const lettersToExclude: Set<string> = new Set()
     const lettersToInclude: Set<string> = new Set()
+    const notInPosition: Set<string>[] = [new Set(), new Set(), new Set(), new Set(), new Set()]
     const hitMask: Array<string> = ['', '', '', '', '']
     this.words.forEach((word) => {
       word.letters.forEach((letter, idx) => {
-        switch (letter.state) {
-          case LetterState.MISS:
-            lettersToExclude.add(letter.value)
-            break
-          case LetterState.WRONG_PLACE:
-            lettersToInclude.add(letter.value)
-            break
-          case LetterState.HIT:
-            lettersToInclude.add(letter.value)
-            hitMask[idx] = letter.value
-            break
+        if (letter.value !== '') {
+          switch (letter.state) {
+            case LetterState.MISS:
+              lettersToExclude.add(letter.value)
+              break
+            case LetterState.WRONG_PLACE:
+              lettersToInclude.add(letter.value)
+              notInPosition[idx].add(letter.value)
+              break
+            case LetterState.HIT:
+              lettersToInclude.add(letter.value)
+              hitMask[idx] = letter.value
+              break
+          }
         }
       })
     })
-    return [lettersToExclude, lettersToInclude, hitMask]
+    return [lettersToExclude, lettersToInclude, notInPosition, hitMask]
   }
 
-  guess(): void {
-    const [lettersToExclude, lettersToInclude, hitMask] = this.analyzeLetters()
+  guess(locale: string): void {
+    const [lettersToExclude, lettersToInclude, notInPosition, hitMask] = this.analyzeLetters()
     console.log('lettersToExclude')
     console.log(lettersToExclude)
     console.log('lettersToInclude')
     console.log(lettersToInclude)
+    console.log('notInPosition')
+    console.log(notInPosition)
     console.log('hitMask')
     console.log(hitMask)
+    const words = dictionary[locale as keyof typeof dictionary]
+    const filteredWords = words
+      .map((word) => word.toUpperCase())
+      .filter((word) => {
+        return (
+          !Array.from(word).some((letter) => lettersToExclude.has(letter)) &&
+          Array.from(lettersToInclude).every((letter) => word.includes(letter)) &&
+          !Array.from(word).some((letter, idx) => notInPosition[idx].has(letter)) &&
+          hitMask.every((char, index) => char === '' || word[index] === char)
+        )
+      })
+    console.log(filteredWords)
+    this.guessCandidates = filteredWords
   }
 
   reset(): void {
