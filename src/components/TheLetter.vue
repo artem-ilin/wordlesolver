@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { Letter } from './WordleSolver'
 
 const props = defineProps({
@@ -7,13 +8,27 @@ const props = defineProps({
     required: true
   }
 })
+
+const inputRef = ref<HTMLInputElement | null>(null);
+
+const setFocus = () => {
+  console.log('SetFocus called')
+  inputRef.value?.focus();  // Use ref to set focus
+}
+
+props.letter.focus = setFocus;
+
 </script>
 
 <template>
-  <div class="letter-box" :class="'state-' + props.letter.state" @click="props.letter.nextState">
-    {{ props.letter.value }}
-  </div>
-</template>
+  <input
+    ref="inputRef"
+    class="letter-box"
+    :class="'state-' + props.letter.state"
+    v-model="props.letter.value"
+    maxlength="1"
+    @click="props.letter.nextState"
+  /></template>
 
 <style scoped>
 .letter-box {

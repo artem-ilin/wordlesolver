@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { Word } from './WordleSolver'
 import TheLetter from './TheLetter.vue'
 
@@ -16,6 +17,11 @@ const emitRemove = () => {
     emit('removeWord')
   }
 }
+
+onMounted(() => {
+  props.word.letters[0].focus()
+});
+
 </script>
 
 <template>
