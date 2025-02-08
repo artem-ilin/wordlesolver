@@ -26,10 +26,13 @@ export class Letter {
   id: number
   value: string
   state: LetterState = LetterState.MISS
+  isSet: boolean = false
+  focus: () => void
 
   constructor(id: number, value: string) {
     this.id = id
     this.value = value
+    this.focus = () => {}
   }
 
   nextState(): void {
@@ -41,6 +44,12 @@ export class Letter {
   resetState(): void {
     this.value = ''
     this.state = LetterState.MISS
+    this.isSet = false
+  }
+
+  setValue(value: string): void {
+    this.value = value
+    this.isSet = true
   }
 }
 
@@ -59,19 +68,21 @@ export class Word {
   current_letter_idx: number = 0
 
   addLetter(value: string): void {
-    this.letters[this.current_letter_idx].value = value
+    this.letters[this.current_letter_idx].setValue(value)
     this.current_letter_idx++
+    this.letters[this.current_letter_idx]?.focus()
   }
 
   removeLetter(): void {
     if (this.current_letter_idx > 0) {
       this.current_letter_idx--
       this.letters[this.current_letter_idx].resetState()
+      this.letters[this.current_letter_idx]?.focus()
     }
   }
 
   isFull(): boolean {
-    return this.letters.every((item) => item.value !== '')
+    return this.letters.every((item) => item.isSet)
   }
 }
 
