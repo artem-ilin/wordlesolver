@@ -45,13 +45,14 @@ onMounted(() => {
   flex: 1;
   margin: 1px;
   text-align: center;
-  padding: 15px;
+  padding: 2px;
 }
 .delete-button {
   width: 50px;
   height: 50px;
   margin: 1px 8px;
   text-align: center;
+  padding: 3px 0;
   border: 2px solid #000;
   border-radius: 10px;
   font-size: 24px;
@@ -59,7 +60,7 @@ onMounted(() => {
   background-color: #f0f0f0;
   color: #333;
 
-  background-color: #f8ff332d;
+  background-color: #ff33332d;
   cursor: pointer;
 }
 </style>
